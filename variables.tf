@@ -19,3 +19,20 @@ variable "environment" {
   type = string
   default = "dev"
 }
+
+# variable "az" {
+#   description = "List of availability zones"
+#   type = map(object({
+#     az-1a = 1,
+#     az-1b = 2
+#   }))
+# }
+
+variable "subnet_cidr" {
+  description = "cidr block of subnet"
+  type = map(number)
+  default = {
+    eu-west-1a = 0,
+    eu-west-1b = 1
+  }
+}
