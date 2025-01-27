@@ -1,38 +1,68 @@
 variable "region" {
   description = "AWS region"
-  type = string
-  default = "eu-west-1"
+  type        = string
+  default     = "eu-west-1"
 }
 
 variable "vpc_cidr" {
   description = "cidr block of vpc"
-  default = "10.0.0.0/16"
+  default     = "10.0.0.0/16"
 }
 
 variable "project_name" {
   description = "Name of the project"
-  default = "platform-academy" 
+  default     = "platform-academy"
 }
 
 variable "environment" {
   description = "Environment of the project"
-  type = string
-  default = "dev"
+  type        = string
+  default     = "dev"
 }
-
-# variable "az" {
-#   description = "List of availability zones"
-#   type = map(object({
-#     az-1a = 1,
-#     az-1b = 2
-#   }))
-# }
 
 variable "subnet_cidr" {
   description = "cidr block of subnet"
-  type = map(number)
+  type        = map(number)
   default = {
     eu-west-1a = 0,
     eu-west-1b = 1
   }
 }
+
+variable "subnet1_cidr" {
+  description = "cidr block of subnet1"
+  type        = string
+  default     = "10.0.1.0/24"
+}
+
+variable "subnet2_cidr" {
+  description = "cidr block of subnet1"
+  type        = string
+  default     = "10.0.2.0/24"
+}
+
+variable "subnet3_cidr" {
+  description = "cidr block of subnet1"
+  type        = string
+  default     = "10.0.3.0/24"
+}
+
+variable "subnet4_cidr" {
+  description = "cidr block of subnet1"
+  type        = string
+  default     = "10.0.4.0/24"
+}
+
+variable "subnet5_cidr" {
+  description = "cidr block of subnet1"
+  type        = string
+  default     = "10.0.5.0/24"
+}
+
+variable "subnet6_cidr" {
+  description = "cidr block of subnet1"
+  type        = string
+  default     = "10.0.6.0/24"
+}
+
+
