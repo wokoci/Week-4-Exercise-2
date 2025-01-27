@@ -6,15 +6,18 @@ resource "aws_vpc" "jeff_Tf_vpc" {
   enable_dns_support   = true
   instance_tenancy = "default"
   tags = {
-    Name = "${var.project_name}-vpc"
+    Name = "${var.project_name}-jeff-vpc"
   }
 }
+
+# add data source get all avaialbilty zones in region
+data "aws_availability_zones" "available" {state = "available"}
 
 # create subnet in az1 public
 resource "aws_subnet" "jeff_Tf_subnet" {
   vpc_id            = aws_vpc.jeff_Tf_vpc.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "eu-west-1a"
+  cidr_block        = "10.0.0.0/24"
+  availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1a]
   tags = {
     Name = "${var.project_name}-subnet1"
   }
@@ -24,7 +27,7 @@ resource "aws_subnet" "jeff_Tf_subnet" {
 resource "aws_subnet" "jeff_Tf_subnet2" {
   vpc_id            = aws_vpc.jeff_Tf_vpc.id
   cidr_block        = "10.0.2.0/24"
-  availability_zone = "eu-west-1b"
+  availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1b]
   tags = {
     Name = "${var.project_name}-subnet2"
   }
@@ -34,7 +37,7 @@ resource "aws_subnet" "jeff_Tf_subnet2" {
 resource "aws_subnet" "jeff_Tf_subnet3" {
   vpc_id            = aws_vpc.jeff_Tf_vpc.id
   cidr_block        = "10.0.3.0/24"
-  availability_zone = "eu-west-1a"
+  availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1a]
   tags = {
     Name = "${var.project_name}-subnet3"
   }
@@ -44,7 +47,7 @@ resource "aws_subnet" "jeff_Tf_subnet3" {
 resource "aws_subnet" "jeff_Tf_subnet4" {
   vpc_id            = aws_vpc.jeff_Tf_vpc.id
   cidr_block        = "10.0.4.0/24"
-  availability_zone = "eu-west-1b"
+  availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1b]
   tags = {
     Name = "${var.project_name}-subnet4"
   }
@@ -54,7 +57,7 @@ resource "aws_subnet" "jeff_Tf_subnet4" {
 resource "aws_subnet" "jeff_Tf_subnet5" {
   vpc_id            = aws_vpc.jeff_Tf_vpc.id
   cidr_block        = "10.0.5.0/24"
-  availability_zone = "eu-west-1a"
+  availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1a]
   tags = {
     Name = "${var.project_name}-subnet5"
   }
@@ -64,7 +67,7 @@ resource "aws_subnet" "jeff_Tf_subnet5" {
 resource "aws_subnet" "jeff_Tf_subnet6" {
   vpc_id            = aws_vpc.jeff_Tf_vpc.id
   cidr_block        = "10.0.6.0/24"
-  availability_zone = "eu-west-1b"
+  availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1b]
   tags = {
     Name = "${var.project_name}-subnet6"
   }
@@ -96,9 +99,3 @@ resource "aws_route_table" "jeff_Tf_RT" {
     Name = "${var.project_name}-jeff_Tf_route"
   }
 }
-
-
-
-
-
- 
