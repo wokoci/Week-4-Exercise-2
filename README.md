@@ -1,2 +1,2 @@
 # jeff-Terraform
-Patform Academy Terraform Project
+## Platform Academy Terraform Project
