@@ -76,6 +76,7 @@ resource "aws_subnet" "jeff_Tf_subnet6" {
   }
 }
 
+
 #add internet gateway
 resource "aws_internet_gateway" "jeff_Tf_IGW" {
   vpc_id = aws_vpc.jeff_Tf_vpc.id
@@ -104,15 +105,13 @@ resource "aws_route_table" "jeff_Tf_RT" {
   }
 }
 
-resource "aws_route_table" "jeff_Tf_Private_RT" {
-  vpc_id = aws_vpc.jeff_Tf_vpc.id
-
-  route {
-    cidr_block = "10.0.0.0/16"
-    gateway_id = "local"
-  }
-
-  tags = {
-    Name = "${var.project_name}-jeff_Tf_route"
-  }
+# create route table for public subnets 
+resource "aws_route_table_association" "jeff_Tf_RT_association_subnet1" {
+  subnet_id      = aws_subnet.jeff_Tf_subnet.id
+  route_table_id = aws_route_table.jeff_Tf_RT.id
+}
+# create route table for public subnets 2
+resource "aws_route_table_association" "jeff_Tf_RT_association_subnet2" {
+  subnet_id      = aws_subnet.jeff_Tf_subnet2.id
+  route_table_id = aws_route_table.jeff_Tf_RT.id
 }
