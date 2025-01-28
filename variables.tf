@@ -65,4 +65,14 @@ variable "subnet6_cidr" {
   default     = "10.0.6.0/24"
 }
 
+variable "ec2_instance_type" {
+  description = "Type of ec2 instance"
+  type        = string
+  default     = "t2.micro"
+}
 
+variable "ami_id" {
+  description = "AMI id"
+  type        = string
+  default     = "ami-0c55b159cbfafe1f0"
+}
