@@ -29,6 +29,13 @@ variable "subnet_cidr" {
   }
 }
 
+variable "management_subnet_cidr" {
+  description = "cidr block of management subnet"
+  type        = string
+  default     = "10.0.0.0/24" 
+}
+
+
 variable "subnet1_cidr" {
   description = "cidr block of subnet1"
   type        = string
