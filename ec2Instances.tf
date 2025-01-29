@@ -6,7 +6,7 @@ resource "aws_key_pair" "jeff_key_pair" {
   }
 }
 
-resource "aws_instance" "public_ec2_instance1" {
+resource "aws_instance" "Jumpbox_ec2_instance" {
   ami             = "ami-0720a3ca2735bf2fa"
   instance_type   = "t2.micro"
   key_name        = aws_key_pair.jeff_key_pair.key_name
@@ -16,17 +16,9 @@ resource "aws_instance" "public_ec2_instance1" {
   tags = {
     Name = "jeff-public_ec2_tf_Instance_1"
   }
-
-  user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y httpd
-              systemctl start httpd
-              systemctl enable httpd
-              EOF
 }
 
-resource "aws_instance" "public_ec2_instance2" {
+resource "aws_instance" "private_ec2_instance2" {
   ami             = "ami-0720a3ca2735bf2fa"
   instance_type   = "t2.micro"
   key_name        = aws_key_pair.jeff_key_pair.key_name
@@ -34,27 +26,17 @@ resource "aws_instance" "public_ec2_instance2" {
   subnet_id       = aws_subnet.jeff_Tf_subnet2.id
   security_groups = [aws_security_group.public_sg.id]
   tags = {
-    Name = "jeff-public_ec2_tf_Instance_2"
+    Name = "jeff-private_ec2_tf_Instance_2"
   }
-
-  user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y httpd
-              systemctl start httpd
-              systemctl enable httpd
-              EOF
 }
 
 
-
-
-output "public_dns_public_ec2_instance1" {
-  description = "public dns of ec2 instance 1"
-  value       = aws_instance.public_ec2_instance1.public_ip
+output "Jumpbox_public_ec2_instance1" {
+  description = "public IP of ec2 instance Jumpbox"
+  value       = aws_instance.Jumpbox_ec2_instance.public_ip
 }
 
-output "public_dns_public_ec2_instance2" {
-  description = "public dns of ec2 instance 2"
-  value       = aws_instance.public_ec2_instance2.public_ip
+output "private_dns_public_ec2_instance2" {
+  description = "private IP of ec2 instance 2"
+  value       = aws_instance.private_ec2_instance2.private_ip
 }
