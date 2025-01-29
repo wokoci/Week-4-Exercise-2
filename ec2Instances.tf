@@ -11,11 +11,34 @@ resource "aws_instance" "Jumpbox_ec2_instance" {
   instance_type   = "t2.micro"
   key_name        = aws_key_pair.jeff_key_pair.key_name
   tenancy         = "default"
-  subnet_id       = aws_subnet.jeff_Tf_subnet.id
+  subnet_id       = aws_subnet.jeff_Tf_subnet3.id
   security_groups = [aws_security_group.public_sg.id]
   tags = {
     Name = "jeff-public_ec2_tf_Instance_1"
   }
+}
+
+resource "aws_instance" "private_ec2_instance1" {
+  ami             = "ami-0720a3ca2735bf2fa"
+  instance_type   = "t2.micro"
+  key_name        = aws_key_pair.jeff_key_pair.key_name
+  tenancy         = "default"
+  subnet_id       = aws_subnet.jeff_Tf_subnet4.id
+  security_groups = [aws_security_group.private_SG.id]
+
+  #add user data to install nginx for amazon linux 2023
+  user_data = <<-EOF
+            #!/bin/bas
+            yum update -y
+            yum install -y epel-release
+            yum install -y nginx
+            systemctl start nginx
+            systemctl enable nginx
+  EOF
+  tags = {
+    Name = "jeff-private_ec2_tf_Instance_2"
+  }
+
 }
 
 resource "aws_instance" "private_ec2_instance2" {
@@ -23,11 +46,22 @@ resource "aws_instance" "private_ec2_instance2" {
   instance_type   = "t2.micro"
   key_name        = aws_key_pair.jeff_key_pair.key_name
   tenancy         = "default"
-  subnet_id       = aws_subnet.jeff_Tf_subnet2.id
-  security_groups = [aws_security_group.public_sg.id]
+  subnet_id       = aws_subnet.jeff_Tf_subnet5.id
+  security_groups = [aws_security_group.private_SG.id]
+
+  #add user data to install nginx for amazon linux 2023
+  user_data = <<-EOF
+            #!/bin/bas
+            yum update -y
+            yum install -y epel-release
+            yum install -y nginx
+            systemctl start nginx
+            systemctl enable nginx
+  EOF
   tags = {
     Name = "jeff-private_ec2_tf_Instance_2"
   }
+
 }
 
 
