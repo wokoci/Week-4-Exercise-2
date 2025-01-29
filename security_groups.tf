@@ -1,5 +1,5 @@
 resource "aws_security_group" "public_LB_SG" {
-  vpc_id = aws_vpc.jeff_Tf_vpc.id
+  vpc_id = aws_vpc.jeff_vpc.id
   name   = "public_LB_SG"
 
   ingress {
@@ -33,14 +33,14 @@ resource "aws_security_group" "public_LB_SG" {
 }
 
 resource "aws_security_group" "private_SG" {
-  vpc_id      = aws_vpc.jeff_Tf_vpc.id
+  vpc_id      = aws_vpc.jeff_vpc.id
   name        = "private_SG"
   description = "private security group for private instances"
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.jeff_Tf_vpc.cidr_block]
+    cidr_blocks = [aws_vpc.jeff_vpc.cidr_block]
     description = "allow inbound SSH"
   }
 
@@ -85,7 +85,7 @@ resource "aws_security_group" "private_SG" {
 resource "aws_security_group" "public_sg" {
   name        = "public_sg"
   description = "public security group for public instances"
-  vpc_id      = aws_vpc.jeff_Tf_vpc.id
+  vpc_id      = aws_vpc.jeff_vpc.id
 
 
   ingress {

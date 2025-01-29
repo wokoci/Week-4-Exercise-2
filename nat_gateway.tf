@@ -7,7 +7,7 @@ resource "aws_eip" "eip" {
 
 resource "aws_nat_gateway" "aws_nat_gateway" {
   allocation_id = aws_eip.eip.id
-  subnet_id     = aws_subnet.jeff_Tf_subnet.id
+  subnet_id     = aws_subnet.jeff_load_balancer_subnet1.id
   tags = {
     Name = "aws_nat_gateway_Az1"
   }
@@ -16,7 +16,7 @@ resource "aws_nat_gateway" "aws_nat_gateway" {
 
 
 resource "aws_route_table" "private_route_Table" {
-  vpc_id = aws_vpc.jeff_Tf_vpc.id
+  vpc_id = aws_vpc.jeff_vpc.id
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.aws_nat_gateway.id
