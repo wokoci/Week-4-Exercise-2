@@ -11,10 +11,11 @@ resource "aws_instance" "Jumpbox_ec2_instance" {
   instance_type   = "t2.micro"
   key_name        = aws_key_pair.jeff_key_pair.key_name
   tenancy         = "default"
-  subnet_id       = aws_subnet.jeff_Tf_subnet3.id
-  security_groups = [aws_security_group.public_sg.id]
+  subnet_id       = aws_subnet.jeff_Tf_mgmt_subnet.id
+  security_groups = [aws_security_group.jump_box_SG.id]
+  associate_public_ip_address = true
   tags = {
-    Name = "jeff-public_ec2_tf_Instance_1"
+    Name = "jeff-jumpbox_Instance"
   }
 }
 
@@ -23,12 +24,12 @@ resource "aws_instance" "private_ec2_instance1" {
   instance_type   = "t2.micro"
   key_name        = aws_key_pair.jeff_key_pair.key_name
   tenancy         = "default"
-  subnet_id       = aws_subnet.jeff_Tf_subnet4.id
-  security_groups = [aws_security_group.private_SG.id]
+  subnet_id       = aws_subnet.jeff_ec2_subnet4.id
+  security_groups = [aws_security_group.private_appServer_SG.id]
 
   #add user data to install nginx for amazon linux 2023
   user_data = <<-EOF
-            #!/bin/bas
+            #!/bin/bash
             yum update -y
             yum install -y epel-release
             yum install -y nginx
@@ -36,7 +37,7 @@ resource "aws_instance" "private_ec2_instance1" {
             systemctl enable nginx
   EOF
   tags = {
-    Name = "jeff-private_ec2_tf_Instance_2"
+    Name = "jeff-private_ec2_tf_Instance_1"
   }
 
 }
@@ -46,12 +47,12 @@ resource "aws_instance" "private_ec2_instance2" {
   instance_type   = "t2.micro"
   key_name        = aws_key_pair.jeff_key_pair.key_name
   tenancy         = "default"
-  subnet_id       = aws_subnet.jeff_Tf_subnet5.id
-  security_groups = [aws_security_group.private_SG.id]
+  subnet_id       = aws_subnet.jeff_DB_subnet5.id
+  security_groups = [aws_security_group.private_appServer_SG.id]
 
   #add user data to install nginx for amazon linux 2023
   user_data = <<-EOF
-            #!/bin/bas
+            #!/bin/bash
             yum update -y
             yum install -y epel-release
             yum install -y nginx
@@ -70,7 +71,7 @@ output "Jumpbox_public_ec2_instance1" {
   value       = aws_instance.Jumpbox_ec2_instance.public_ip
 }
 
-output "private_dns_public_ec2_instance2" {
-  description = "private IP of ec2 instance 2"
-  value       = aws_instance.private_ec2_instance2.private_ip
-}
+# output "private_dns_ec2_instance2" {
+#   description = "private IP of ec2 instance 2"
+#   value       = aws_instance.private_ec2_instance2.private_ip
+# }

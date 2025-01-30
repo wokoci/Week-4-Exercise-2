@@ -30,22 +30,22 @@ resource "aws_route_table" "private_route_Table" {
 
 # link private route table to nat gateway
 resource "aws_route_table_association" "jeff_Tf_RT_association_subnet3" {
-  subnet_id      = aws_subnet.jeff_Tf_subnet3.id
+  subnet_id      = aws_subnet.jeff_ec2_subnet3.id
   route_table_id = aws_route_table.private_route_Table.id
   # not sure of the above
 }
 
 resource "aws_route_table_association" "subnet4_RT_association" {
-  subnet_id      = aws_subnet.jeff_Tf_subnet4.id
+  subnet_id      = aws_subnet.jeff_ec2_subnet4.id
   route_table_id = aws_route_table.private_route_Table.id
 }
 
 resource "aws_route_table_association" "subnet5_RT_association" {
-  subnet_id      = aws_subnet.jeff_Tf_subnet5.id
+  subnet_id      = aws_subnet.jeff_DB_subnet5.id
   route_table_id = aws_route_table.private_route_Table.id
 }
 
 resource "aws_route_table_association" "subnet6_associations" {
-  subnet_id = aws_subnet.jeff_Tf_subnet6.id
+  subnet_id = aws_subnet.jeff_DB_subnet6.id
   route_table_id = aws_route_table.private_route_Table.id
 }
