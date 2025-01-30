@@ -54,14 +54,11 @@ resource "aws_instance" "private_ec2_instance1" {
               sudo mkdir -p /var/www/inc
               sudo chown ec2-user:apache /var/www/inc
               
-              cd /var/www/html
-              echo " <?php
-              define('DB_SERVER', 'platform-academy-dev-mysql.chm6ya0o8im5.eu-west-1.rds.amazonaws.com');
-              define('DB_USERNAME', 'admin');
-              define('DB_PASSWORD', 'password123');
-              define('DB_DATABASE', 'simple');
-              ?>" >> dbinfo.inc
-              
+              chown ec2-user:apache /var/www/inc
+  
+            # Create dbinfo.inc using printf
+              printf '<?php\ndefine(\"DB_SERVER\", \"${aws_db_instance.mysql_instance.address}\");\ndefine(\"DB_USERNAME\", \"admin\");\ndefine(\"DB_PASSWORD\", \"password123\");\ndefine(\"DB_DATABASE\", \"sample\");\n?>' > /var/www/inc/dbinfo.inc
+
               cd /var/www/html
               git clone https://github.com/wokoci/hostWebApp.git
               cp hostWebApp/* .
@@ -103,22 +100,22 @@ resource "aws_instance" "private_ec2_instance2" {
               
               # Create and configure database connection file
               sudo mkdir -p /var/www/inc
-              sudo chown ec2-user:apache /var/www/inc       
+              sudo chown ec2-user:apache /var/www/inc
               
-              cat > /var/www/inc/dbinfo.inc << 'DBINFO'
-              <?php
-              define('DB_SERVER', 'jeff-mysql-db.chm6ya0o8im5.eu-west-1.rds.amazonaws.com');
-              define('DB_USERNAME', 'admin');
-              define('DB_PASSWORD', 'password123');
-              define('DB_DATABASE', 'sample');
-              ?>
-              DBINFO
-              
+              chown ec2-user:apache /var/www/inc
+  
+            # Create dbinfo.inc using printf
+              printf '<?php\ndefine(\"DB_SERVER\", \"${aws_db_instance.mysql_instance.address}\");\ndefine(\"DB_USERNAME\", \"admin\");\ndefine(\"DB_PASSWORD\", \"password123\");\ndefine(\"DB_DATABASE\", \"sample\");\n?>' > /var/www/inc/dbinfo.inc
+
+              cd /var/www/html
+              git clone https://github.com/wokoci/hostWebApp.git
+              cp hostWebApp/* .
+              rm -rf hostWebApp
+
               # Set proper ownership and permissions for the database info file
               sudo chown ec2-user:apache /var/www/inc/dbinfo.inc
               sudo chmod 0640 /var/www/inc/dbinfo.inc
               EOF
-
 
   tags = {
     Name = "jeff-private_ec2_tf_Instance_2"
