@@ -6,6 +6,7 @@ resource "aws_key_pair" "jeff_key_pair" {
   }
 }
 
+
 resource "aws_instance" "Jumpbox_ec2_instance" {
   ami             = "ami-0720a3ca2735bf2fa"
   instance_type   = "t2.micro"
@@ -19,6 +20,12 @@ resource "aws_instance" "Jumpbox_ec2_instance" {
   }
 }
 
+# data "aws_db_instance" "database" {
+#   db_instance_identifier = "jeff-mysql-db"
+# }
+
+# data.aws_db_instance.database.address
+
 resource "aws_instance" "private_ec2_instance1" {
   ami             = "ami-0720a3ca2735bf2fa"
   instance_type   = "t2.micro"
@@ -28,14 +35,42 @@ resource "aws_instance" "private_ec2_instance1" {
   security_groups = [aws_security_group.private_appServer_SG.id]
 
   #add user data to install nginx for amazon linux 2023
-  user_data = <<-EOF
-            #!/bin/bash
-            yum update -y
-            yum install -y epel-release
-            yum install -y nginx
-            systemctl start nginx
-            systemctl enable nginx
-  EOF
+    user_data = <<-EOF
+              #!/bin/bash
+              sudo yum update -y
+              sudo yum install git -y
+              sudo dnf install -y httpd php php-mysqli mariadb105
+              sudo systemctl start httpd 
+              sudo systemctl enable httpd
+              
+              # Configure Apache and permissions
+              sudo usermod -a -G apache ec2-user
+              sudo chown -R ec2-user:apache /var/www
+              sudo chmod 2775 /var/www
+              find /var/www -type d -exec sudo chmod 2775 {} \;
+              find /var/www -type f -exec sudo chmod 0664 {} \;
+              
+              # Create and configure database connection file
+              sudo mkdir -p /var/www/inc
+              sudo chown ec2-user:apache /var/www/inc
+              
+              cd /var/www/html
+              echo " <?php
+              define('DB_SERVER', 'platform-academy-dev-mysql.chm6ya0o8im5.eu-west-1.rds.amazonaws.com');
+              define('DB_USERNAME', 'admin');
+              define('DB_PASSWORD', 'password123');
+              define('DB_DATABASE', 'simple');
+              ?>" >> dbinfo.inc
+              
+              cd /var/www/html
+              git clone https://github.com/wokoci/hostWebApp.git
+              cp hostWebApp/* .
+              rm -rf hostWebApp
+
+              # Set proper ownership and permissions for the database info file
+              sudo chown ec2-user:apache /var/www/inc/dbinfo.inc
+              sudo chmod 0640 /var/www/inc/dbinfo.inc
+              EOF
   tags = {
     Name = "jeff-private_ec2_tf_Instance_1"
   }
@@ -51,14 +86,40 @@ resource "aws_instance" "private_ec2_instance2" {
   security_groups = [aws_security_group.private_appServer_SG.id]
 
   #add user data to install nginx for amazon linux 2023
-  user_data = <<-EOF
-            #!/bin/bash
-            yum update -y
-            yum install -y epel-release
-            yum install -y nginx
-            systemctl start nginx
-            systemctl enable nginx
-  EOF
+ user_data = <<-EOF
+              #!/bin/bash
+              sudo yum update -y
+              sudo yum install git -y
+              sudo dnf install -y httpd php php-mysqli mariadb105
+              sudo systemctl start httpd 
+              sudo systemctl enable httpd
+              
+              # Configure Apache and permissions
+              sudo usermod -a -G apache ec2-user
+              sudo chown -R ec2-user:apache /var/www
+              sudo chmod 2775 /var/www
+              find /var/www -type d -exec sudo chmod 2775 {} \;
+              find /var/www -type f -exec sudo chmod 0664 {} \;
+              
+              # Create and configure database connection file
+              sudo mkdir -p /var/www/inc
+              sudo chown ec2-user:apache /var/www/inc       
+              
+              cat > /var/www/inc/dbinfo.inc << 'DBINFO'
+              <?php
+              define('DB_SERVER', 'jeff-mysql-db.chm6ya0o8im5.eu-west-1.rds.amazonaws.com');
+              define('DB_USERNAME', 'admin');
+              define('DB_PASSWORD', 'password123');
+              define('DB_DATABASE', 'sample');
+              ?>
+              DBINFO
+              
+              # Set proper ownership and permissions for the database info file
+              sudo chown ec2-user:apache /var/www/inc/dbinfo.inc
+              sudo chmod 0640 /var/www/inc/dbinfo.inc
+              EOF
+
+
   tags = {
     Name = "jeff-private_ec2_tf_Instance_2"
   }

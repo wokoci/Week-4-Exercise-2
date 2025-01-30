@@ -2,7 +2,7 @@
 # app target group
 resource "aws_lb_target_group" "app_tg" {
   name        = "jeff-app-target-group"
-  target_type = "ip"
+  target_type = "instance"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.jeff_vpc.id
