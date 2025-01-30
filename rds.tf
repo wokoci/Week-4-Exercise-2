@@ -15,7 +15,7 @@ resource "aws_db_instance" "mysql_instance" {
   allocated_storage = 20
   storage_type      = "gp2"
 
-  db_name  = "simple"
+  db_name  = "sample"
   username = "admin"
   password = "password123"  # Change this in production
 
