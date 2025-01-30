@@ -6,7 +6,7 @@ resource "aws_vpc" "jeff_vpc" {
   enable_dns_support   = true
   instance_tenancy     = "default"
   tags = {
-    Name = "${var.project_name}-jeff-vpc"
+    Name = "${var.project_name}-${var.environment}-jeff-vpc"
   }
 }
 
@@ -20,7 +20,7 @@ resource "aws_subnet" "jeff_Tf_mgmt_subnet" {
   availability_zone       = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1a]
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.project_name}-mgmt-subnet"
+    Name = "${var.project_name}-${var.environment}-mgmt-AZ_1"
   }
 }
 
@@ -31,7 +31,7 @@ resource "aws_subnet" "jeff_load_balancer_subnet1" {
   availability_zone       = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1a]
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.project_name}-subnet1"
+    Name = "${var.project_name}-${var.environment}-LB_AZ_1"
   }
 }
 
@@ -42,48 +42,48 @@ resource "aws_subnet" "jeff_load_balancer_subnet2" {
   availability_zone       = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1b]
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.project_name}-subnet2"
+    Name = "${var.project_name}-${var.environment}-LB_AZ_2"
   }
 }
 
 # create subnet in az3 private
-resource "aws_subnet" "jeff_Tf_subnet3" {
+resource "aws_subnet" "jeff_ec2_subnet3" {
   vpc_id            = aws_vpc.jeff_vpc.id
   cidr_block        = var.subnet3_cidr
   availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1a]
   tags = {
-    Name = "${var.project_name}-subnet3"
+    Name = "${var.project_name}-${var.environment}-private_ec2AZ_1"
   }
 }
 
 # create subnet in az4 private
-resource "aws_subnet" "jeff_Tf_subnet4" {
+resource "aws_subnet" "jeff_ec2_subnet4" {
   vpc_id            = aws_vpc.jeff_vpc.id
   cidr_block        = var.subnet4_cidr
   availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1b]
   tags = {
-    Name = "${var.project_name}-subnet4"
+    Name = "${var.project_name}-${var.environment}-private_ec2AZ_2"
   }
 }
 
 
-# create subnet in az5 private
-resource "aws_subnet" "jeff_Tf_subnet5" {
+# create db  subnet in az5 private
+resource "aws_subnet" "jeff_DB_subnet5" {
   vpc_id            = aws_vpc.jeff_vpc.id
   cidr_block        = var.subnet5_cidr
   availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1a]
   tags = {
-    Name = "${var.project_name}-subnet5"
+    Name = "${var.project_name}-${var.environment}-private_DB_AZ_1"
   }
 }
 
-# create subnet in az6 private
-resource "aws_subnet" "jeff_Tf_subnet6" {
+# create db subnet in az6 private
+resource "aws_subnet" "jeff_DB_subnet6" {
   vpc_id            = aws_vpc.jeff_vpc.id
   cidr_block        = var.subnet6_cidr
   availability_zone = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1b]
   tags = {
-    Name = "${var.project_name}-subnet6"
+    Name = "${var.project_name}-${var.environment}-private_DB_AZ_2"
   }
 }
 
@@ -93,7 +93,7 @@ resource "aws_internet_gateway" "jeff_Tf_IGW" {
   vpc_id = aws_vpc.jeff_vpc.id
 
   tags = {
-    Name = "${var.project_name}-jeff_Tf_gw"
+    Name = "${var.project_name}-${var.environment}-jeff_IGW"
   }
 }
 
@@ -113,7 +113,7 @@ resource "aws_route_table" "jeff_Tf_RT" {
   }
 
   tags = {
-    Name = "${var.project_name}-jeff_Tf"
+    Name = "${var.project_name}-${var.environment}-public_RT"
   }
 }
 
@@ -134,5 +134,3 @@ resource "aws_route_table_association" "jeff_Tf_RT_association_subnet2" {
   subnet_id      = aws_subnet.jeff_load_balancer_subnet2.id
   route_table_id = aws_route_table.jeff_Tf_RT.id
 }
-
-
