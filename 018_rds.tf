@@ -22,7 +22,7 @@ resource "aws_db_instance" "mysql_instance" {
   db_subnet_group_name   = aws_db_subnet_group.database_subnet_group.name
   vpc_security_group_ids = [aws_security_group.RDS_public_sg.id]
 
-  multi_az               = false
+  multi_az               = true
   publicly_accessible    = false
   skip_final_snapshot    = true
   parameter_group_name   = "default.mysql8.0"
