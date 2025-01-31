@@ -7,6 +7,4 @@ phases:
       - sudo yum update -y
       - yum install git -y
       - dnf install -y httpd php php-mysqli mariadb105
-      - systemctl start httpd 
-      - systemctl enable httpd
       - echo testing initial setup
