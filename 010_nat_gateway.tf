@@ -1,7 +1,7 @@
 resource "aws_eip" "eip" {
   domain = "vpc"
   tags = {
-    Name = "jeff-public_ip_for_nat_gateway"
+    Name = "${var.environment}-jeff-public_ip_for_nat_gateway"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_route_table" "private_route_Table" {
   }
 
   tags = {
-    name = "private nat gateway"
+    name = "${var.project_name}-${var.environment}-private nat gateway"
   }
 }
 
