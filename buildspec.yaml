@@ -9,6 +9,7 @@ phases:
       - dnf install -y httpd php php-mysqli mariadb105
       - echo testing initial setup of codebuild
       - echo installing terraform
+      - echo terraform -version
       - yum install -y yum-utils
       - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - sudo yum -y install terraform
