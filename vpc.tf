@@ -20,7 +20,7 @@ resource "aws_subnet" "jeff_Tf_mgmt_subnet" {
   availability_zone       = data.aws_availability_zones.available.names[var.subnet_cidr.eu-west-1a]
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.project_name}-${var.environment}-mgmt-AZ_1"
+    Name = "${var.project_name}-${var.environment}-lgtm-AZ_1"
   }
 }
 
