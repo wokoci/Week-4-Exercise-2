@@ -26,40 +26,6 @@ resource "aws_instance" "Jumpbox_ec2_instance" {
 
 # data.aws_db_instance.database.address
 
-resource "aws_instance" "private_ec2_instance1" {
-  ami             = "ami-0720a3ca2735bf2fa"
-  instance_type   = "t2.micro"
-  key_name        = aws_key_pair.jeff_key_pair.key_name
-  tenancy         = "default"
-  subnet_id       = aws_subnet.jeff_ec2_subnet4.id
-  security_groups = [aws_security_group.private_appServer_SG.id]
-
-  user_data = templatefile("user_data.sh.tpl", {
-    db_endpoint = aws_db_instance.mysql_instance.address
-  })
-  tags = {
-    Name = "jeff-private_ec2_tf_Instance_1"
-  }
-
-}
-
-resource "aws_instance" "private_ec2_instance2" {
-  ami             = "ami-0720a3ca2735bf2fa"
-  instance_type   = "t2.micro"
-  key_name        = aws_key_pair.jeff_key_pair.key_name
-  tenancy         = "default"
-  subnet_id       = aws_subnet.jeff_DB_subnet5.id
-  security_groups = [aws_security_group.private_appServer_SG.id]
-
-  user_data = templatefile("user_data.sh.tpl", {
-    db_endpoint = aws_db_instance.mysql_instance.address
-  })
-
-  tags = {
-    Name = "jeff-private_ec2_tf_Instance_2"
-  }
-
-}
 
 
 output "Jumpbox_public_ec2_instance1" {
