@@ -21,7 +21,7 @@ phases:
       - sudo yum -y install terraform
       - echo installed terraform
       - echo starting deployment of infrastructure
-      - terraform plan -var-file=prod.terraform.tfvars
+      - terraform apply --auto-approve -var-file=prod.terraform.tfvars
       
 
   
