@@ -34,7 +34,3 @@ resource "aws_db_instance" "mysql_instance" {
 }
 
 
-output "rds_server" {
-  description = "rds database server url"
-  value = aws_db_instance.mysql_instance.address
-}

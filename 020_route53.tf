@@ -13,6 +13,3 @@ resource "aws_route53_record" "site_sub_domain" {
   }
 }
 
-output "site_url" {
-  value = "https://jeff.aws.lab.bancey.xyz"
-}

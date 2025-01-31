@@ -17,7 +17,7 @@ resource "aws_lb_target_group" "app_tg" {
     matcher             = "200,301,302"
   }
   tags = {
-    name = "jeff-app Target group"
+    name = "${var.environment}-jeff-app Target group"
   }
 }
 
@@ -60,6 +60,6 @@ resource "aws_lb" "jeff-app_load_balancer" {
     create_before_destroy = false
   }
   tags = {
-    name = "jeff-Application load balancer"
+    name = "${var.project_name}-${var.environment}-jeff-Application load balancer"
   }
 }

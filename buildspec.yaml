@@ -20,5 +20,10 @@ phases:
       - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - sudo yum -y install terraform
       - echo installed terraform
+  deploy:
+    commands:
+      - echo starting deployment of infrastructure
+      - terraform plan -var-file=prod.terraform.tfvars
+      
 
   
