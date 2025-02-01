@@ -22,6 +22,8 @@ phases:
     commands:
       - terraform version
       - echo Verifying Terraform installation
+      - echo verifying caller identity
+      - aws sts get-caller-identity
 
   build:
     commands:
