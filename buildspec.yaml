@@ -14,6 +14,7 @@ phases:
       - yum install -y yum-utils
       - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - yum -y install terraform
+      - bash named-profile.sh
 
   pre_build:
     commands:
@@ -25,7 +26,7 @@ phases:
       - echo Starting deployment of infrastructure
       - pwd
       - ls -la
-      - terraform init -backend-config="bucket=jeffrey-tf-state" -backend-config="key=prod/terraform.tfstate" -backend-config="region=eu-west-1" -backend-config="dynamodb_table=terraform-state-lock"
+      - terraform init -backend-config="key=prod/terraform.tfstate"
       - terraform plan -var-file=prod.terraform.tfvars
       - terraform apply --auto-approve -var-file=prod.terraform.tfvars
 
