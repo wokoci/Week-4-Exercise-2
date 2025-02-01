@@ -2,30 +2,30 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      python: 3.9
     commands:
-      - echo Installing dependencies
-      - sudo yum update -y
-      - yum install git -y
-      - dnf install -y httpd php php-mysqli mariadb105
-      - echo testing initial setup of codebuild
-      - echo installing terraform
-      - echo terraform -version
+      - echo Installing Terraform
       - yum install -y yum-utils
-      - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-      - sudo yum -y install terraform
+      - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+      - yum -y install terraform
+
+  pre_build:
+    commands:
+      - terraform version
+      - echo Verifying Terraform installation
 
   build:
     commands:
-      - echo running terraform
-      - sudo yum install -y yum-utils
-      - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-      - sudo yum -y install terraform
-      - echo installed terraform
-      - echo starting deployment of infrastructure
+      - echo Starting deployment of infrastructure
       - terraform init \
-      - backend-config="bucket=jeffrey-tf-state" \
-      - backend-config="key=prod.terraform.tfstate" \
-      - backend-config="region=eu-west-1"
+        -backend-config="bucket=jeffrey-tf-state" \
+        -backend-config="key=prod/terraform.tfstate" \
+        -backend-config="region=eu-west-1" \
+        -backend-config="dynamodb_table=terraform-state-lock"
+      - terraform plan -var-file=prod.terraform.tfvars
       - terraform apply --auto-approve -var-file=prod.terraform.tfvars
-    
-  
+
+  post_build:
+    commands:
+      - echo Terraform apply completed on `date`
