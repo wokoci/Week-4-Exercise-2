@@ -1,5 +1,12 @@
 version: 0.2
 
+env:
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    REGION: $REGION
+
+
 artifacts:
   files:
     - '**/*'
@@ -15,7 +22,9 @@ phases:
       - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - yum -y install terraform
       - aws configure
-      - bash named-profile.sh
+      - aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" --profile "$profile_name"
+      - aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" --profile "$profile_name"
+      - aws configure set region "$REGION" --profile "$profile_name"
 
   pre_build:
     commands:
