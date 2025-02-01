@@ -1,5 +1,10 @@
 version: 0.2
 
+artifacts:
+  files:
+    - '**/*'
+  base-directory: '.'
+
 phases:
   install:
     runtime-versions:
@@ -18,6 +23,8 @@ phases:
   build:
     commands:
       - echo Starting deployment of infrastructure
+      - pwd
+      - ls -la
       - terraform init -backend-config="bucket=jeffrey-tf-state" -backend-config="key=prod/terraform.tfstate" -backend-config="region=eu-west-1" -backend-config="dynamodb_table=terraform-state-lock"
       - terraform plan -var-file=prod.terraform.tfvars
       - terraform apply --auto-approve -var-file=prod.terraform.tfvars
@@ -25,4 +32,3 @@ phases:
   post_build:
     commands:
       - echo Terraform apply completed on `date`
-      
