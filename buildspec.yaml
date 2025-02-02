@@ -14,13 +14,16 @@ phases:
       - yum install -y yum-utils
       - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - yum -y install terraform
-      - aws configure
-      - bash named-profile.sh
+      - aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" --profile "$profile_name"
+      - aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" --profile "$profile_name"
+      - aws configure set region "$REGION" --profile "$profile_name"
 
   pre_build:
     commands:
       - terraform version
       - echo Verifying Terraform installation
+      - echo verifying caller identity
+      - aws sts get-caller-identity
 
   build:
     commands:
@@ -29,7 +32,7 @@ phases:
       - ls -la
       - terraform init -backend-config="key=prod/terraform.tfstate"
       - terraform plan -var-file=prod.terraform.tfvars
-      - terraform apply --auto-approve -var-file=prod.terraform.tfvars
+      - terraform destroy -var-file=prod.terraform.tfvars --auto-approve
 
   post_build:
     commands:

@@ -20,6 +20,7 @@ resource "aws_launch_template" "web_server" {
     tags = {
       Name = "${var.project_name}-${var.environment}-jeff-asg-instance"
     }
+
   }
 
   lifecycle {
@@ -43,7 +44,7 @@ resource "aws_autoscaling_group" "web_asg" {
 
   tag {
     key                 = "Name"
-    value               = "jeff-asg-instance"
+    value               = "${var.project_name}-${var.environment}-jeff-asg-instance"
     propagate_at_launch = true
   }
 
@@ -107,4 +108,8 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu" {
 
   alarm_description = "Scale down if CPU utilization is below 20% for 4 minutes"
   alarm_actions = [aws_autoscaling_policy.scale_down.arn]
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-cloudwatch-alarm"
+  }
 }
