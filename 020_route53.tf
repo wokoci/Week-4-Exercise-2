@@ -1,8 +1,5 @@
 data "aws_route53_zone" "hosted_zone" {
   name = var.acm_root_domain
-  tags = {
-    Name="${var.project_name}-${var.environment}-hosted-zone"
-  }
 }
 
 resource "aws_route53_record" "site_sub_domain" {
