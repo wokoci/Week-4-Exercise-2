@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    profile_name: "default"
-
 artifacts:
   files:
     - '**/*'
@@ -14,42 +10,30 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
-      - echo Starting install phase
-      - echo Current directory: $(pwd)
-      - echo Directory contents:
-      - ls -la
       - echo Installing Terraform
       - yum install -y yum-utils
       - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - yum -y install terraform
+      - aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" --profile "$profile_name"
+      - aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" --profile "$profile_name"
+      - aws configure set region "$REGION" --profile "$profile_name"
 
   pre_build:
     commands:
-      - echo Starting pre_build phase
-      - echo Configuring AWS CLI
-      - aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-      - aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-      - aws configure set region "$REGION"
-      - echo Verifying AWS Configuration
-      - aws configure list
-      - echo Verifying caller identity
-      - aws sts get-caller-identity
-      - echo Verifying Terraform installation
       - terraform version
+      - echo Verifying Terraform installation
+      - echo verifying caller identity
+      - aws sts get-caller-identity
 
   build:
     commands:
-      - echo Starting build phase
-      - echo Current directory: $(pwd)
-      - echo Directory contents:
-      - ls -la
       - echo Starting deployment of infrastructure
+      - pwd
+      - ls -la
       - terraform init -backend-config="key=prod/terraform.tfstate"
-      - terraform apply -var-file=prod.terraform.tfvars --auto-approve
+      - terraform plan -var-file=prod.terraform.tfvars
+      - terraform destroy -var-file=prod.terraform.tfvars --auto-approve
 
   post_build:
     commands:
-      - echo Starting post_build phase
-      - echo Terraform apply completed on $(date)
-      - echo Final directory contents:
-      - ls -la
+      - echo Terraform apply completed on `date`
