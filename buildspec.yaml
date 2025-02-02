@@ -14,9 +14,9 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
-      - echo "Starting install phase"
-      - echo "Current directory: $(pwd)"
-      - echo "Directory contents:"
+      - echo Starting install phase
+      - echo Current directory: $(pwd)
+      - echo Directory contents:
       - ls -la
       - echo Installing Terraform
       - yum install -y yum-utils
@@ -25,31 +25,31 @@ phases:
 
   pre_build:
     commands:
-      - echo "Starting pre_build phase"
-      - echo "Configuring AWS CLI"
+      - echo Starting pre_build phase
+      - echo Configuring AWS CLI
       - aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
       - aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
       - aws configure set region "$REGION"
-      - echo "Verifying AWS Configuration"
+      - echo Verifying AWS Configuration
       - aws configure list
-      - echo "Verifying caller identity"
+      - echo Verifying caller identity
       - aws sts get-caller-identity
-      - echo "Verifying Terraform installation"
+      - echo Verifying Terraform installation
       - terraform version
 
   build:
     commands:
-      - echo "Starting build phase"
-      - echo "Current directory: $(pwd)"
-      - echo "Directory contents:"
+      - echo Starting build phase
+      - echo Current directory: $(pwd)
+      - echo Directory contents:
       - ls -la
-      - echo "Starting deployment of infrastructure"
+      - echo Starting deployment of infrastructure
       - terraform init -backend-config="key=prod/terraform.tfstate"
       - terraform apply -var-file=prod.terraform.tfvars --auto-approve
 
   post_build:
     commands:
-      - echo "Starting post_build phase"
-      - echo "Terraform apply completed on $(date)"
-      - echo "Final directory contents:"
+      - echo Starting post_build phase
+      - echo Terraform apply completed on $(date)
+      - echo Final directory contents:
       - ls -la
