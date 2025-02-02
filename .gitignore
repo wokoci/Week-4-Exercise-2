@@ -41,3 +41,8 @@ terraform.rc
 
 !prod.terraform.tfvars
 !dev.terraform.tfvars
+
+
+#keys
+jeff-key
+key_material.txt
