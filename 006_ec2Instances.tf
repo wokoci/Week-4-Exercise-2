@@ -1,8 +1,8 @@
 resource "aws_key_pair" "jeff_key_pair" {
   key_name   = "jeff-key"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = file("./id_rsa.pub")
   tags = {
-    Name = "jeff-key"
+    Name = "${var.project_name}-${var.environment}-jeff-key"
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_instance" "Jumpbox_ec2_instance" {
   security_groups = [aws_security_group.jump_box_SG.id]
   associate_public_ip_address = true
   tags = {
-    Name = "jeff-jumpbox_Instance"
+    Name = "${var.project_name}-${var.environment}-jeff-jumpbox_Instance"
   }
 }
 
@@ -28,10 +28,7 @@ resource "aws_instance" "Jumpbox_ec2_instance" {
 
 
 
-output "Jumpbox_public_ec2_instance1" {
-  description = "public IP of ec2 instance Jumpbox"
-  value       = aws_instance.Jumpbox_ec2_instance.public_ip
-}
+
 
 # output "private_dns_ec2_instance2" {
 #   description = "private IP of ec2 instance 2"

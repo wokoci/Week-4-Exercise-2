@@ -1,7 +1,7 @@
 resource "aws_eip" "eip" {
   domain = "vpc"
   tags = {
-    Name = "jeff-public_ip_for_nat_gateway"
+    Name="${var.project_name}-${var.environment}-jeff-public_ip_for_nat_gateway"
   }
 }
 
@@ -12,6 +12,8 @@ resource "aws_nat_gateway" "aws_nat_gateway" {
     Name = "aws_nat_gateway_Az1"
   }
   depends_on = [aws_internet_gateway.jeff_Tf_IGW]
+
+  
 }
 
 
@@ -23,7 +25,7 @@ resource "aws_route_table" "private_route_Table" {
   }
 
   tags = {
-    name = "private nat gateway"
+    name = "${var.project_name}-${var.environment}-private nat gateway"
   }
 }
 

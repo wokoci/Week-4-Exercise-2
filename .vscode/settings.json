@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "hostnames",
-        "Jumpbox"
+        "Jumpbox",
+        "tfvars"
     ]
 }

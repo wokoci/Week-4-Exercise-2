@@ -36,5 +36,15 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-#ignore vscode settings
-.vscode/*
+#ignore vscode & idea settings
+.vscode/settings.json
+.idea
+.idea*
+
+!prod.terraform.tfvars
+!dev.terraform.tfvars
+
+
+#keys
+jeff-key
+key_material.txt

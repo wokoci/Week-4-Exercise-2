@@ -11,8 +11,6 @@ resource "aws_route53_record" "site_sub_domain" {
     zone_id                = aws_lb.jeff-app_load_balancer.zone_id
     evaluate_target_health = true
   }
+  
 }
 
-output "site_url" {
-  value = "https://jeff.aws.lab.bancey.xyz"
-}

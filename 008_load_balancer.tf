@@ -17,7 +17,7 @@ resource "aws_lb_target_group" "app_tg" {
     matcher             = "200,301,302"
   }
   tags = {
-    name = "jeff-app Target group"
+    name = "${var.project_name}-${var.environment}-jeff-app Target group"
   }
 }
 
@@ -34,6 +34,9 @@ resource "aws_lb_listener" "jeff-http_listener" {
       status_code = "HTTP_301"
     }
   }
+  tags = {
+    Name="${var.project_name}-${var.environment}-ALB-HTTP-Listener"
+  }
 }
 
 resource "aws_lb_listener" "jeff_https_listener" {
@@ -45,6 +48,9 @@ resource "aws_lb_listener" "jeff_https_listener" {
   default_action {
    type = "forward"
    target_group_arn = aws_lb_target_group.app_tg.arn
+  }
+  tags = {
+    Name="${var.project_name}-${var.environment}-ALB-HTTPS-Listener"
   }
 }
 
@@ -60,6 +66,6 @@ resource "aws_lb" "jeff-app_load_balancer" {
     create_before_destroy = false
   }
   tags = {
-    name = "jeff-Application load balancer"
+    name = "${var.project_name}-${var.environment}-jeff-Application load balancer"
   }
 }
