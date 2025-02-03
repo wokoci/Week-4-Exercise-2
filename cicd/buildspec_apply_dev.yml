@@ -24,10 +24,9 @@ phases:
 
   post_build:
     commands:
-      - echo plan stage completed
+      - echo apply stage completed 
 
 artifacts:
   files:
     - '**/*'
   base-directory: '.'
-  
