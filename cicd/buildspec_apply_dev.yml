@@ -26,6 +26,7 @@ phases:
     commands:
       - echo plan stage completed
 
+
 artifacts:
   files:
     - '**/*'
