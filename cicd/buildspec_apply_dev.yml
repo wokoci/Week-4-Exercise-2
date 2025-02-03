@@ -26,6 +26,7 @@ phases:
     commands:
       - echo apply stage completed 
 
+      
 artifacts:
   files:
     - '**/*'
