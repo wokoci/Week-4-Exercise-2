@@ -25,9 +25,9 @@ phases:
 
   post_build:
     commands:
-      - echo plan stage completed
+      - echo dev plan stage completed
 
 artifacts:
   files:
-    - '**/*'
-  base-directory: '.'
+    - 'tfplan'
+  base-directory: ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}
