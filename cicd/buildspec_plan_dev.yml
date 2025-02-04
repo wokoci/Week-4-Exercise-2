@@ -29,11 +29,7 @@ phases:
       - echo dev plan stage completed
 
 artifacts:
-  secondary-artifacts:
-    TerraformPlan:
-      files:
-        - tfplan
-      base-directory: tfplan-output
-      name: terraform-dev-plan
-      bucket-name: jeff-tf-outfile
-      path: terraform/dev/plans/
+  files:
+    - tfplan
+  base-directory: tfplan-output
+  discard-paths: yes
