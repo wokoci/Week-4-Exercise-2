@@ -21,13 +21,17 @@ phases:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
       - terraform init -backend-config="key=dev/terraform.tfstate"
-      - terraform plan -var-file=dev.terraform.tfvars  --out=tfplan
+      - terraform plan -var-file=dev.terraform.tfvars --out=dev-output/tfplan
 
   post_build:
     commands:
       - echo dev plan stage completed
+      - cp dev-output/tfplan ${CODEBUILD_SRC_DIR}/dev-output/
 
 artifacts:
   files:
-    - 'dev-output/tfplan'
-  base-directory: ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}
+    - tfplan
+  base-directory: dev-output
+  name: dev-tfplan
+  discard-paths: yes
+
