@@ -27,6 +27,7 @@ phases:
   post_build:
     commands:
       - echo dev plan stage completed
+      - aws s3 cp tfplan-output/tfplan s3://jeff-tf-outfile/terraform/dev/plans/tfplan
 
 artifacts:
   files:
