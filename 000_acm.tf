@@ -38,6 +38,3 @@ resource "aws_acm_certificate_validation" "vert_validation" {
   certificate_arn         = aws_acm_certificate.jeff_cert_tf.arn
   validation_record_fqdns = [for record in aws_route53_record.aws_route53_record : record.fqdn]
 }
-
-
-
