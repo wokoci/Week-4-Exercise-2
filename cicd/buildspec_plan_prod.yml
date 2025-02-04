@@ -20,10 +20,8 @@ phases:
   build:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
-      # First attempt to reconfigure
       - terraform init -backend-config="key=prod/terraform.tfstate" -reconfigure || terraform init -backend-config="key=prod/terraform.tfstate" -migrate-state
-      # Plan only after successful init
-      - terraform plan -var-file=prod.terraform.tfvars
+      - terraform plan -var-file=prod.terraform.tfvars -out=tfplan
  
 
   post_build:
@@ -33,5 +31,6 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: '.'
+    - tfplan
+  base-directory: ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}
 

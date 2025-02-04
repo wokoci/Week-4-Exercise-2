@@ -20,8 +20,8 @@ phases:
   build:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
-      - terraform init -backend-config="key=dev/terraform.tfstate"
-      - terraform apply tfapply
+      - terraform init -backend-config="key=prod/terraform.tfstate"
+      - terraform apply tfplan
 
   post_build:
     commands:
