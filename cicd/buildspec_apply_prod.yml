@@ -20,7 +20,7 @@ phases:
   build:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
-      - terraform init -backend-config="key=prod/terraform.tfstate"
+      - terraform init -backend-config="key=prod/terraform.tfstate" -reconfigure || terraform init -backend-config="key=prod/terraform.tfstate" -migrate-state
       - terraform apply tfplan
 
   post_build:
