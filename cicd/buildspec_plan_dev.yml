@@ -34,4 +34,3 @@ artifacts:
   base-directory: dev-output
   name: dev-tfplan
   discard-paths: yes
-
