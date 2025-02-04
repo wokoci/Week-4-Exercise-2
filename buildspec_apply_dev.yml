@@ -11,22 +11,22 @@ phases:
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - aws configure set region $REGION
-      - sleep 2m # wait for the outfile to be delivered to s3
 
   pre_build:
     commands:
       - terraform version
       - aws sts get-caller-identity
-      - aws s3 cp s3://jeff-tf-outfile/terraform/dev/plans/tfplan tfplan
+      - mkdir -p tfplan-output
+      - aws s3 cp s3://jeff-tf-outfile/terraform/dev/plans/tfplan tfplan-output/tfplan
 
   build:
     commands:
-      - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
+      - cd ${CODEBUILD_SRC_DIR}
       - terraform init -backend-config="key=dev/terraform.tfstate"
-      - terraform apply tfplan
+      - terraform apply tfplan-output/tfplan
 
   post_build:
     commands:
       - echo apply stage completed 
 
- 
+# No artifacts needed in apply stage since we're only consuming the plan
