@@ -34,3 +34,11 @@ artifacts:
   base-directory: dev-output
   name: dev-tfplan
   discard-paths: yes
+  secondary-artifacts:
+    TerraformPlan:
+      files:
+        - tfplan
+      base-directory: dev-output
+      name: terraform-dev-plan
+      bucket-name: jeff-tf-outfile
+      path: terraform/dev/plans/
