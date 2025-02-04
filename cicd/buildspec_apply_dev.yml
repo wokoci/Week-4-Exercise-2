@@ -16,12 +16,14 @@ phases:
     commands:
       - terraform version
       - aws sts get-caller-identity
+      - mkdir -p tfplan-output
+      - aws s3 cp s3://jeff-tf-outfile/terraform/dev/plans/tfplan tfplan-output/tfplan
 
   build:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
       - terraform init -backend-config="key=dev/terraform.tfstate"
-      - terraform apply -var-file=dev.terraform.tfvars  tfapply
+      - terraform apply tfplan-output/tfplan
 
   post_build:
     commands:
