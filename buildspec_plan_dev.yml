@@ -31,3 +31,5 @@ artifacts:
   files:
     - '**/*'
   base-directory: '.'
+
+  
