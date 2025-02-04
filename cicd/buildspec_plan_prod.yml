@@ -20,10 +20,11 @@ phases:
   build:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
-      # Single init command with all required flags
-      - terraform init -backend-config="key=prod/terraform.tfstate" -migrate-state -reconfigure
+      # First attempt to reconfigure
+      - terraform init -backend-config="key=prod/terraform.tfstate" -reconfigure || terraform init -backend-config="key=prod/terraform.tfstate" -migrate-state
       # Plan only after successful init
       - terraform plan -var-file=prod.terraform.tfvars
+ 
 
   post_build:
     commands:
