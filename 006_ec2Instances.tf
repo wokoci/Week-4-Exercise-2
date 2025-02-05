@@ -1,5 +1,5 @@
 resource "aws_key_pair" "jeff_key_pair" {
-  key_name   = "jeff-key"
+  key_name   = var.key_pair
   public_key = file("./id_rsa.pub")
   tags = {
     Name = "${var.project_name}-${var.environment}-jeff-key"

@@ -5,7 +5,7 @@ resource "aws_acm_certificate" "jeff_cert_tf" {
   validation_method         = "DNS"
 
   tags = {
-    Environment = "${var.environment}-jeff-cert"
+    Environment = "${var.project_name}-${var.environment}-jeff-cert"
   }
   lifecycle {
     create_before_destroy = true

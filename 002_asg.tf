@@ -3,6 +3,9 @@ resource "aws_launch_template" "web_server" {
   name_prefix   = "jeff-web-server"
   image_id      = "ami-0720a3ca2735bf2fa"
   instance_type = "t2.micro"
+  tags = {
+    Name = "${var.project_name}-${var.environment}-web_server"
+  }
 
   network_interfaces {
     associate_public_ip_address = false
@@ -71,6 +74,7 @@ resource "aws_autoscaling_policy" "scale_down" {
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
   autoscaling_group_name = aws_autoscaling_group.web_asg.name
+  
 }
 
 # CloudWatch Alarms for Auto Scaling
@@ -83,7 +87,7 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   period              = 120
   statistic           = "Average"
   threshold           = 80
-
+  tags = {Name="${var.project_name}-${var.environment}-jeff-cloud-watch"}
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.web_asg.name
   }

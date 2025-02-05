@@ -95,3 +95,8 @@ variable "acm_root_domain" {
   type = string
   # default     = "aws.lab.bancey.xyz"
 }
+
+variable "key_pair" {
+  description = "key pair for ssh connection"
+  type = string
+}

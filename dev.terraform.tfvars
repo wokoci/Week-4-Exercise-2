@@ -28,3 +28,5 @@ ami_id="ami-0c55b159cbfafe1f0"
 acm_domain_name="jeff.aws.lab.bancey.xyz" #should this be here?
 
 acm_root_domain="aws.lab.bancey.xyz"
+
+key_pair="dev_key"
