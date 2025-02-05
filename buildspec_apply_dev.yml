@@ -25,7 +25,7 @@ phases:
     commands:
       - terraform version
       - aws sts get-caller-identity
-      - aws s3 cp s3://jeff-tf-outfile/terraform/dev/plans/tfplan ./tfplan
+      # - aws s3 cp s3://jeff-tf-outfile/terraform/dev/plans/tfplan ./tfplan
 
   build:
     commands:
