@@ -25,7 +25,7 @@ ec2_instance_type="t2.micro"
 
 ami_id="ami-0c55b159cbfafe1f0"
 
-acm_domain_name="dev" #should this be here?
+acm_domain_name="dev" 
 
 acm_root_domain="aws.lab.bancey.xyz"
 

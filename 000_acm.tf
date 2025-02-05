@@ -1,7 +1,7 @@
 
 resource "aws_acm_certificate" "jeff_cert_tf" {
-  domain_name               = var.acm_domain_name
-#   subject_alternative_names = [var.alternate_domain_name]
+  domain_name               = "${var.acm_domain_name}.${var.acm_root_domain}"
+  subject_alternative_names = ["*.${var.acm_domain_name}.${var.acm_root_domain}"]
   validation_method         = "DNS"
 
   tags = {
