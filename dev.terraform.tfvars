@@ -34,3 +34,11 @@ key_pair="dev_key"
 target_group = "dev"
 
 app_load_balancer="dev"
+
+aws_nat_gateway_Az1="dev-nat-gateway"
+
+acm_domain_name=dev
+
+web_asg=prod
+
+scale_up=dev

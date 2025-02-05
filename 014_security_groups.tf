@@ -60,7 +60,7 @@ resource "aws_security_group" "jump_box_SG" {
 
 resource "aws_security_group" "private_appServer_SG" {
   vpc_id      = aws_vpc.jeff_vpc.id
-  name        = "private_ec2_SG"
+  name        = "${var.project_name}-${var.environment}-private_ec2_SG"
   description = "allow traffic if its coming from the load balancer Security group on port 80/443"
 
 
@@ -104,7 +104,7 @@ resource "aws_security_group" "private_appServer_SG" {
 
 
 resource "aws_security_group" "RDS_public_sg" {
-  name        = "private RDS Security Group on port 3306"
+  name        = "${var.project_name}-${var.environment}-port 3306"
   description = "public security group for public instances"
   vpc_id      = aws_vpc.jeff_vpc.id
 

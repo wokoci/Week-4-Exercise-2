@@ -4,7 +4,8 @@ data "aws_route53_zone" "hosted_zone" {
 
 resource "aws_route53_record" "site_sub_domain" {
   zone_id = data.aws_route53_zone.hosted_zone.zone_id
-  name    = "jeff.aws.lab.bancey.xyz"
+  name    = "`{var.acm_domain_name}.aws.lab.bancey.xyz"
+  // name = 
   type    = "A"
   alias {
     name                   = aws_lb.jeff-app_load_balancer.dns_name

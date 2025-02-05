@@ -33,7 +33,7 @@ resource "aws_launch_template" "web_server" {
 
 # Auto Scaling Group
 resource "aws_autoscaling_group" "web_asg" {
-  name             = "jeff-web-asg"
+  name             = "${var.web_asg}-{var.project_name}-${var.environment}-asg"
   desired_capacity = 2
   max_size         = 4
   min_size         = 2
@@ -61,7 +61,7 @@ resource "aws_autoscaling_group" "web_asg" {
 
 # Auto Scaling Policies
 resource "aws_autoscaling_policy" "scale_up" {
-  name                   = "jeff-scale-up-policy"
+  name                   = "${var.project_name}-${var.environment}-jeff-scale-up-policy"
   scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
@@ -69,7 +69,7 @@ resource "aws_autoscaling_policy" "scale_up" {
 }
 
 resource "aws_autoscaling_policy" "scale_down" {
-  name                   = "jeff-scale-down-policy"
+  name                   = "${var.project_name}-${var.environment}-jeff-scale-down-policy"
   scaling_adjustment     = -1
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
@@ -79,7 +79,7 @@ resource "aws_autoscaling_policy" "scale_down" {
 
 # CloudWatch Alarms for Auto Scaling
 resource "aws_cloudwatch_metric_alarm" "high_cpu" {
-  alarm_name          = "jeff-high-cpu-alarm"
+  alarm_name          = "${var.project_name}-${var.environment}-jeff-high-cpu-alarm"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
@@ -97,7 +97,7 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "low_cpu" {
-  alarm_name          = "jeff-low-cpu-alarm"
+  alarm_name          = "${var.project_name}-${var.environment}-jeff-low-cpu-alarm"
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"

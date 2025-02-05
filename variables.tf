@@ -93,7 +93,6 @@ variable "acm_domain_name" {
 variable "acm_root_domain" {
   description = "root domain name"
   type = string
-  # default     = "aws.lab.bancey.xyz"
 }
 
 variable "key_pair" {
@@ -110,3 +109,20 @@ variable "app_load_balancer" {
   description = "application load balancer"
   type = string
 }
+
+variable "aws_nat_gateway_Az1" {
+  description = "nat gateway in az1"
+  type = string
+}
+
+variable "web_asg" {
+  description = "web auto scaling group"
+  type = string
+}
+
+variable "scale_up" {
+  description = "scaling policy"
+  type = string
+}
+
+

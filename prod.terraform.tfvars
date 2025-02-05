@@ -34,3 +34,11 @@ key_pair="prod_key"
 target_group = "prod"
 
 app_load_balancer="prod"
+
+aws_nat_gateway_Az1="prod-nat-gateway"
+
+acm_domain_name=dev
+
+web_asg=prod
+
+scale_up=dev

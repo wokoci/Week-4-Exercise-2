@@ -9,7 +9,7 @@ resource "aws_nat_gateway" "aws_nat_gateway" {
   allocation_id = aws_eip.eip.id
   subnet_id     = aws_subnet.jeff_load_balancer_subnet1.id
   tags = {
-    Name = "aws_nat_gateway_Az1"
+    Name = "${var.project_name}-${var.environment}-nat gateway"
   }
   depends_on = [aws_internet_gateway.jeff_Tf_IGW]
 
