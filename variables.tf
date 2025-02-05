@@ -100,3 +100,13 @@ variable "key_pair" {
   description = "key pair for ssh connection"
   type = string
 }
+
+variable "target_group" {
+  description = "target group "
+  type = string
+}
+
+variable "app_load_balancer" {
+  description = "application load balancer"
+  type = string
+}

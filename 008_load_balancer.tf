@@ -1,7 +1,7 @@
 
 # app target group
 resource "aws_lb_target_group" "app_tg" {
-  name        = "jeff-app-target-group"
+  name        = var.target_group
   target_type = "instance"
   port        = 80
   protocol    = "HTTP"
@@ -57,7 +57,7 @@ resource "aws_lb_listener" "jeff_https_listener" {
 
 # application load balancer
 resource "aws_lb" "jeff-app_load_balancer" {
-  name               = "app-load-balancer"
+  name               = var.app_load_balancer
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.public_LB_SG.id]

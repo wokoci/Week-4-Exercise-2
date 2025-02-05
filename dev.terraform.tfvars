@@ -30,3 +30,7 @@ acm_domain_name="jeff.aws.lab.bancey.xyz" #should this be here?
 acm_root_domain="aws.lab.bancey.xyz"
 
 key_pair="dev_key"
+
+target_group = "dev"
+
+app_load_balancer="dev"
