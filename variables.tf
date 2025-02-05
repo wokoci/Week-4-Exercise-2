@@ -87,7 +87,6 @@ variable "ami_id" {
 variable "acm_domain_name" {
   description = "domain name of site"
   type        = string
-  # default     = "jeff.aws.lab.bancey.xyz"
 }
 
 variable "acm_root_domain" {
