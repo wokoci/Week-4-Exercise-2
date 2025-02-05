@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    TF_COMMAND: "apply"
+    TF_COMMAND: "destroy"
   parameter-store:
     AWS_ACCESS_KEY_ID: /Codebuild/MY_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: /Codebuild/MY_AWS_SECRET_ACCESS_KEY
@@ -31,7 +31,7 @@ phases:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
       - terraform init -backend-config="key=dev/terraform.tfstate" -reconfigure
       - terraform plan -var-file=dev.terraform.tfvars -out=fresh.tfplan
-      - terraform apply fresh.tfplan
+      - terraform ${TF_COMMAND} fresh.tfplan
 
   post_build:
     commands:
