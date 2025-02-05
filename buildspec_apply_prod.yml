@@ -26,7 +26,7 @@ phases:
       - terraform version
       - aws sts get-caller-identity
       - mkdir -p tfplan-output
-      - aws s3 cp s3://jeff-tf-outfile/terraform/prod/plans/tfplan tfplan-output/tfplan
+      - aws s3 cp s3://jeff-tf-outfile/terraform/dev/plans/tfplan tfplan-output/tfplan
 
   build:
     commands:
@@ -37,8 +37,3 @@ phases:
   post_build:
     commands:
       - echo prod apply stage completed 
-
-artifacts:
-  files:
-    - '**/*'
-  base-directory: '.'
