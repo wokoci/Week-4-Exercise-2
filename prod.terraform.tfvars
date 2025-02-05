@@ -25,7 +25,7 @@ ec2_instance_type="t2.micro"
 
 ami_id="ami-0c55b159cbfafe1f0"
 
-acm_domain_name="jeff.aws.lab.bancey.xyz" #should this be here?
+acm_domain_name="prod" #should this be here?
 
 acm_root_domain="aws.lab.bancey.xyz"
 
@@ -37,7 +37,6 @@ app_load_balancer="prod"
 
 aws_nat_gateway_Az1="prod-nat-gateway"
 
-acm_domain_name=dev
 
 web_asg=prod
 
