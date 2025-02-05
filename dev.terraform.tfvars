@@ -38,6 +38,6 @@ app_load_balancer="dev"
 aws_nat_gateway_Az1="dev-nat-gateway"
 
 
-web_asg=prod
+web_asg="prod"
 
-scale_up=dev
+scale_up="dev"
