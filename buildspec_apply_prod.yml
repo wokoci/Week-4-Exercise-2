@@ -31,7 +31,7 @@ phases:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
       - terraform init -backend-config="key=prod/terraform.tfstate"
       - terraform plan -var-file=prod.terraform.tfvars -out=tfplan
-      - terraform ${TF_COMMAND} --auto-approve
+      - terraform ${TF_COMMAND} -var-file=prod.terraform.tfvars --auto-approve
 
   post_build:
     commands:
