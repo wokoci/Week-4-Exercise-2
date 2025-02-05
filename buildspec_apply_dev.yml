@@ -3,13 +3,11 @@ version: 0.2
 env:
   variables:
     TF_COMMAND: "apply"
-    # TF_COMMAND: apply
-    parameter-store:
-      AWS_ACCESS_KEY_ID: /Codebuild/MY_AWS_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: /Codebuild/MY_AWS_SECRET_ACCESS_KEY
-      PROFILE: /Codebuild/PROFILE
-      REGION: /Codebuild/REGION
-
+  parameter-store:
+    AWS_ACCESS_KEY_ID: /Codebuild/MY_AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: /Codebuild/MY_AWS_SECRET_ACCESS_KEY
+    PROFILE: /Codebuild/PROFILE
+    REGION: /Codebuild/REGION
 
 phases:
   install:
@@ -32,7 +30,6 @@ phases:
   build:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
-    # - terraform init -backend-config="key=dev/terraform.tfstate"
       - terraform init -backend-config="key=dev/terraform.tfstate" -reconfigure
       - terraform show
       - terraform plan -var-file=dev.terraform.tfvars -out=fresh.tfplan
@@ -40,4 +37,4 @@ phases:
 
   post_build:
     commands:
-      - echo apply stage completed 
+      - echo apply stage completed
