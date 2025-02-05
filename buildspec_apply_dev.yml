@@ -19,9 +19,9 @@ phases:
       - yum install -y yum-utils
       - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - yum -y install terraform
-      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-      - aws configure set region $REGION
+      - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+      - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+      - aws configure set region ${REGION}
 
   pre_build:
     commands:
