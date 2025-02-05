@@ -4,11 +4,11 @@ env:
   variables:
     TF_COMMAND: apply
     # TF_COMMAND: apply
-    parameter-store:
-      AWS_ACCESS_KEY_ID: "/Codebuild/MY_AWS_ACCESS_KEY_ID"
-      AWS_SECRET_ACCESS_KEY: "/Codebuild/MY_AWS_SECRET_ACCESS_KEY"
-      PROFILE: "/Codebuild/PROFILE"
-      REGION: "/Codebuild/REGION"
+  parameter-store:
+    AWS_ACCESS_KEY_ID: /Codebuild/MY_AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: /Codebuild/MY_AWS_SECRET_ACCESS_KEY
+    PROFILE: /Codebuild/PROFILE
+    REGION: /Codebuild/REGION
 phases:
   install:
     runtime-versions:
@@ -17,21 +17,21 @@ phases:
       - yum install -y yum-utils
       - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - yum -y install terraform
-      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-      - aws configure set region $REGION
+      - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+      - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+      - aws configure set region ${REGION}
 
   pre_build:
     commands:
       - terraform version
       - aws sts get-caller-identity
       - mkdir -p tfplan-output
-      - aws s3 cp s3://jeff-tf-outfile/terraform/dev/plans/tfplan tfplan-output/tfplan
+      - aws s3 cp s3://jeff-tf-outfile/terraform/prod/plans/tfplan tfplan-output/tfplan
 
   build:
     commands:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
-      - terraform init -backend-config="key=dev/terraform.tfstate"
+      - terraform init -backend-config="key=prod/terraform.tfstate"
       - terraform apply tfplan-output/tfplan
 
   post_build:
